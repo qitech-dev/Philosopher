@@ -71,5 +71,7 @@ void		eat(t_philo *philo);
 void		release_forks(t_philo *philo);
 void		philo_sleep(t_philo *philo);
 void		think(t_philo *philo);
+void		print_death(t_philo *philo);
+void		monitor_simulation(t_data *data);
 
 #endif

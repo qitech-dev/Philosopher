@@ -50,6 +50,20 @@ void	print_status(t_philo *philo, char *status)
 	pthread_mutex_unlock(&philo->data->write_lock);
 }
 
+void	print_death(t_philo *philo)
+{
+	long long	timestamp;
+
+	pthread_mutex_lock(&philo->data->write_lock);
+	if (!check_dead_flag(philo->data))//ensure "died" is printed only once.
+	{
+		set_dead_flag(philo->data);
+		timestamp = get_time_ms() - philo->data->start_time;
+		printf("%lld %d died\n", timestamp, philo->id);
+	}
+	pthread_mutex_unlock(&philo->data->write_lock);
+}
+
 void	precise_sleep(long long duration, t_data *data)
 {
 	long long	start;
