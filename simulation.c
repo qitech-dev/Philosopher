@@ -32,7 +32,7 @@ static int	create_threads(t_data *data)
 	while (i < data->num_of_philos)
 	{
 		if (pthread_create(&data->philos[i].thread, NULL,
-				 philo_routine, &data->philos[i]) != 0)
+				philo_routine, &data->philos[i]) != 0)
 		{
 			printf("Error: Thread creation failed.\n");
 			set_dead_flag(data);
