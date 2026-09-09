@@ -30,7 +30,7 @@ int	check_dead_flag(t_data *data)
 	return (flag);
 }
 
-void	set_dead_flag(t_data *data)
+void	set_dead_flag(t_data *data)//stop process
 {
 	pthread_mutex_lock(&data->dead_lock);
 	data->dead_flag = 1;
@@ -41,4 +41,30 @@ void    *philo_routine(void *arg)
 {
    (void)arg;
 	return (NULL);
+}
+
+void	print_status(t_philo *philo, char *status)
+{
+	long long	timestamp;
+
+	pthread_mutex_lock(&philo->data->write_lock);
+	if (!check_dead_flag(philo->data))
+	{
+		timestamp = get_time_ms() - philo->data->start_time;
+		printf("%lld %d %s\n", timestamp, philo->id, status);
+	}
+	pthread_mutex_unlock(&philo->data->write_lock);
+}
+
+void	precise_sleep(long long duration, t_data *data)
+{
+	long long	start;
+
+	start = get_time_ms();
+	while (!check_dead_flag(data))//make sure other philos not die
+	{
+		if ((get_time_ms() - start) >= duration)
+			break ;
+		usleep(500);
+	}
 }

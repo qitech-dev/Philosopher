@@ -17,6 +17,7 @@
 # include <stdlib.h>
 # include <pthread.h>
 # include <sys/time.h>
+# include <unistd.h>
 
 typedef struct s_data	t_data;
 typedef struct s_philo	t_philo;
