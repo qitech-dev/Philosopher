@@ -22,7 +22,7 @@ int	take_forks(t_philo *philo)
 		pthread_mutex_lock(&philo->left_fork);
 		print_status(philo, "has taken a fork");
 		pthread_mutex_unlock(philo->left_fork);
-		return (0);
+		return (0);//not receive two forks
 	}
 	if (philo->id % 2 == 0)
 	{
@@ -39,4 +39,19 @@ int	take_forks(t_philo *philo)
 	pthread_mutex_lock(second);
 	print_status(philo, "has taken a fork");
 	return (1);
+}
+
+void	eat(t_philo *philo)
+{
+	pthread_mutex_lock(&philo->meal_lock);
+	philo->last_meal_time = get_time_ms();
+	pthread_mutex_unlock(&philo->meal_lock);
+	print_status(philo, "is eating");
+	precise_sleep(philo->data->time_to_eat, philo->data);
+	if (!check_dead_flag)
+	{
+		pthread_mutex_lock(&philo->meal_lock);
+		philo->meals_eaten++;
+		pthread_mutex_unlock(&philo->meal_lock);
+	}
 }
