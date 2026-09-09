@@ -22,6 +22,32 @@ static long long	get_last_meal_time(t_philo *philo)
 	return (last_meal);
 }
 
+static int	has_eaten_enough(t_philo *philo, int target)
+{
+	int	enough;
+
+	pthread_mutex_lock(&philo->meal_lock);
+	enough = (philo->meals_eaten >= target);
+	pthread_mutex_unlock(&philo->meal_lock);
+	return (enough);
+}
+
+static int	all_ate_enough(t_data *data)
+{
+	int	i;
+
+	if (data->must_eat_times == -1)
+		return (0);
+	i = 0;
+	while (i < data->num_of_philos)
+	{
+		if (!has_eaten_enough(data->philos[i], data->must_eat_times))
+			return (0);
+			i++;
+	}
+	return (1);
+}
+
 void	monitor_simulation(t_data *data)
 {
 	int			i;
@@ -39,6 +65,11 @@ void	monitor_simulation(t_data *data)
 				return ;
 			}
 			i++;
+		}
+		if (all_ate_enough(data))
+		{
+			set_dead_flag(data);
+			return ;
 		}
 		usleep(500);
 	}
