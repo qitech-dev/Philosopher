@@ -16,13 +16,13 @@ static void	select_forks(t_philo *philo, pthread_mutex_t **first, pthread_mutex_
 {
 	if (philo->id % 2 == 0)
 	{
-		first = philo->right_fork;
-		second = philo->left_fork;
+		*first = philo->right_fork;
+		*second = philo->left_fork;
 	}
 	else
 	{
-		first = philo->left_fork;
-		second = philo->right_fork;
+		*first = philo->left_fork;
+		*second = philo->right_fork;
 	}
 }
 
@@ -31,7 +31,7 @@ int	take_forks(t_philo *philo)
 	pthread_mutex_t	*first;
 	pthread_mutex_t	*second;
 
-	select_forks(philo, first, second);
+	select_forks(philo, &first, &second);
 	pthread_mutex_lock(first);
 	if (check_dead_flag(philo->data))
 	{
@@ -80,4 +80,6 @@ void	philo_sleep(t_philo *philo)
 void	think(t_philo *philo)
 {
 	print_status(philo, "is thinking");
+	if (philo->data->num_of_philos % 2 == 1)
+		precise_sleep(philo->data->time_to_eat / 2, philo->data);//prevent failing to get the second fork.
 }

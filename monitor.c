@@ -35,7 +35,7 @@ void	monitor_simulation(t_data *data)
 			last_meal = get_last_meal_time(&data->philos[i]);
 			if ((get_time_ms() - last_meal) >= data->time_to_die)
 			{
-				print_death(data->philos);
+				print_death(&data->philos[i]);
 				return ;
 			}
 			i++;

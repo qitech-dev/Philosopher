@@ -26,19 +26,19 @@ static void	one_philo_routine(t_philo *philo)
 	pthread_mutex_unlock(philo->left_fork);
 }
 
-static int	run_one_cycle(t_philo philo)
+static int	run_one_cycle(t_philo *philo)
 {
 	if (!take_forks(philo))
-		return (NULL);
+		return (0);
 	eat(philo);
 	release_forks(philo);
 	if (check_dead_flag(philo->data))
-		return (NULL);
+		return (0);
 	philo_sleep(philo);
 	if (check_dead_flag(philo->data))
-		return (NULL);
+		return (0);
 	think(philo);
-	return (NULL);
+	return (1);
 }
 
 void	*philo_routine(void *arg)
@@ -60,7 +60,7 @@ void	*philo_routine(void *arg)
 			break ;
 	}
 	return (NULL);
-}//
+}
 
 static void	join_threads(t_data *data, int thread_count)
 {
@@ -99,6 +99,7 @@ int	start_simulation(t_data *data)
 		i++;
 	}
 	set_start_flag(data);
+	monitor_simulation(data);
 	join_threads(data, data->num_of_philos);
 	return (0);
 }
