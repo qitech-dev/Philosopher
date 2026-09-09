@@ -38,7 +38,9 @@ int	eat(t_philo *philo)
 	if (check_dead_flag(philo->data))
 		return (0);
 	pthread_mutex_lock(&philo->meal_lock);
-	philo->meals_eaten++;
+	if (philo->data->must_eat_times > 0
+		&& philo->meals_eaten < philo->data->must_eat_times)
+		philo->meals_eaten++;
 	pthread_mutex_unlock(&philo->meal_lock);
 	return (1);
 }

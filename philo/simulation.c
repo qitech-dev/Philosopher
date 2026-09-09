@@ -12,16 +12,24 @@
 
 #include "philo.h"
 
-static void	join_threads(t_data *data, int thread_count)
+static int	join_threads(t_data *data, int thread_count)
 {
 	int	i;
+	int	status;
 
 	i = 0;
+	status = 0;
 	while (i < thread_count)
 	{
-		pthread_join(data->philos[i].thread, NULL);
+		if (pthread_join(data->philos[i].thread, NULL) != 0)
+		{
+			printf("Error: Thread join failed.\n");
+			set_dead_flag(data);
+			status = 2;
+		}
 		i++;
 	}
+	return (status);
 }
 
 static int	create_threads(t_data *data)
@@ -37,7 +45,8 @@ static int	create_threads(t_data *data)
 			printf("Error: Thread creation failed.\n");
 			set_dead_flag(data);
 			set_start_flag(data);
-			join_threads(data, i);
+			if (join_threads(data, i) != 0)
+				return (2);
 			return (1);
 		}
 		i++;
@@ -61,10 +70,12 @@ static void	prepare_start(t_data *data)
 
 int	start_simulation(t_data *data)
 {
-	if (create_threads(data))
-		return (1);
+	int	status;
+
+	status = create_threads(data);
+	if (status != 0)
+		return (status);
 	prepare_start(data);
 	monitor_simulation(data);
-	join_threads(data, data->num_of_philos);
-	return (0);
+	return (join_threads(data, data->num_of_philos));
 }

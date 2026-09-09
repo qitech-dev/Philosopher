@@ -15,6 +15,7 @@
 int	main(int argc, char **argv)
 {
 	t_data	data;
+	int		status;
 
 	if (parse_args(argc, argv, &data) != 0)
 		return (1);
@@ -28,11 +29,9 @@ int	main(int argc, char **argv)
 		cleanup_data(&data);
 		return (1);
 	}
-	if (start_simulation(&data) != 0)
-	{
-		cleanup_data(&data);
+	status = start_simulation(&data);
+	if (status == 2)
 		return (1);
-	}
 	cleanup_data(&data);
 	return (0);
 }
