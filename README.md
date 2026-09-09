@@ -46,21 +46,21 @@ The single-philosopher case is handled separately: the philosopher can take the 
 ### Compilation
 
 ```sh
-make
+make -C philo
 ```
 
 This creates the `philo` executable. Other available rules are:
 
 ```sh
-make clean    # remove object files
-make fclean   # remove object files and the executable
-make re       # rebuild the project from scratch
+make -C philo clean  # remove object files
+make -C philo fclean # remove object files and the executable
+make -C philo re     # rebuild the project from scratch
 ```
 
 ### Execution
 
 ```sh
-./philo number_of_philosophers time_to_die time_to_eat time_to_sleep \
+./philo/philo number_of_philosophers time_to_die time_to_eat time_to_sleep \
     [number_of_times_each_philosopher_must_eat]
 ```
 
@@ -77,9 +77,9 @@ All times are expressed in milliseconds. Every argument must be a positive integ
 ### Examples
 
 ```sh
-./philo 5 800 200 200
-./philo 5 800 200 200 7
-./philo 1 800 200 200
+./philo/philo 5 800 200 200
+./philo/philo 5 800 200 200 7
+./philo/philo 1 800 200 200
 ```
 
 The second command stops when every philosopher has completed at least seven meals, unless a philosopher dies first.
