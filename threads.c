@@ -58,6 +58,8 @@ void	*philo_routine(void *arg)
 		one_philo_routine(philo);
 		return (NULL);
 	}
+	if (philo->id % 2 == 0)
+		precise_sleep(philo->data->time_to_eat / 2, philo->data);
 	while (!check_dead_flag(philo->data))
 	{
 		if (!run_one_cycle(philo))
