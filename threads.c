@@ -60,7 +60,7 @@ void	*philo_routine(void *arg)
 			break ;
 	}
 	return (NULL);
-}
+}//
 
 static void	join_threads(t_data *data, int thread_count)
 {
