@@ -93,3 +93,9 @@ int	parse_args(int argc, char **argv, t_data *data)
 		data->must_eat_times = -1;
 	return (0);
 }
+
+void	release_forks(t_philo *philo)
+{
+	pthread_mutex_unlock(philo->left_fork);
+	pthread_mutex_unlock(philo->right_fork);
+}
