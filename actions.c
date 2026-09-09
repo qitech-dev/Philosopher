@@ -89,8 +89,11 @@ void	release_forks(t_philo *philo)
 
 void	philo_sleep(t_philo *philo)
 {
+	long long	sleep_end;
+
+	sleep_end = get_time_ms() + philo->data->time_to_sleep;
 	print_status(philo, "is sleeping");
-	precise_sleep(philo->data->time_to_sleep, philo->data);
+	precise_sleep_until(sleep_end, philo->data);
 }
 
 void	think(t_philo *philo)
