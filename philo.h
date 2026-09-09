@@ -60,5 +60,7 @@ void		cleanup_data(t_data *data);
 int			check_dead_flag(t_data *data);
 void		set_dead_flag(t_data *data);
 long long	get_time_ms(void);
+void		print_status(t_philo *philo, char *status);
+void		precise_sleep(long long duration, t_data *data);
 
 #endif
