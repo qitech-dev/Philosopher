@@ -65,5 +65,6 @@ void		print_status(t_philo *philo, char *status);
 void		precise_sleep(long long duration, t_data *data);
 int			check_start_flag(t_data *data);
 void		set_start_flag(t_data *data);
+int			start_simulation(t_data *data);
 
 #endif

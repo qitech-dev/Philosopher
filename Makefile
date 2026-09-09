@@ -6,7 +6,8 @@ CFLAGS = -Wall -Wextra -Werror -pthread
 SOURCES =	main.c \
 			check_functions.c \
 			init_functions.c \
-			tools.c
+			tools.c \
+			threads.c
 
 OBJECTS = $(SOURCES:.c=.o)
 

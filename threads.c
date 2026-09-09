@@ -23,7 +23,7 @@ void	*philo_routine(void *arg)
 	t_philo	*philo;
 
 	philo = (t_philo *)arg;
-	wait_start(s_data);
+	wait_start(philo->data);
 	if (!check_dead_flag(philo->data))
 		print_status(philo, "is thinking");
 	return (NULL);
@@ -48,11 +48,11 @@ int	start_simulation(t_data *data)
 	i = 0;
 	while (i < data->num_of_philos)
 	{
-		if (pthread_create(&data->philos[i].thread, NULL, philo_routine, &data->philos[i]) 1= 0)
+		if (pthread_create(&data->philos[i].thread, NULL, philo_routine, &data->philos[i]) != 0)
 		{
 			printf("Error: Thread creation failed.\n");
 			set_dead_flag(data);
-			set_start_flag(data);
+			set_start_flag(data);//release the preceding process.
 			join_threads(data, i);
 			return (1);
 		}

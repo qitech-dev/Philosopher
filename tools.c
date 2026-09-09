@@ -63,7 +63,7 @@ void	precise_sleep(long long duration, t_data *data)
 	}
 }
 
-int	check_star_flag(t_data *data)
+int	check_start_flag(t_data *data)
 {
 	int	flag;
 

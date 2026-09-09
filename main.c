@@ -28,7 +28,11 @@ int	main(int argc, char **argv)
 		cleanup_data(&data);
 		return (1);
 	}
-	data.start_time = get_time_ms();
+	if (start_simulation(&data) != 0)
+	{
+		cleanup_data(&data);
+		return (1);
+	}
 	cleanup_data(&data);
 	return (0);
 }
