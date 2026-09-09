@@ -19,7 +19,7 @@ int	take_forks(t_philo *philo)
 
 	if (philo->data->num_of_philos == 1)
 	{
-		pthread_mutex_lock(&philo->left_fork);
+		pthread_mutex_lock(philo->left_fork);
 		print_status(philo, "has taken a fork");
 		pthread_mutex_unlock(philo->left_fork);
 		return (0);//not receive two forks
@@ -48,7 +48,7 @@ void	eat(t_philo *philo)
 	pthread_mutex_unlock(&philo->meal_lock);
 	print_status(philo, "is eating");
 	precise_sleep(philo->data->time_to_eat, philo->data);
-	if (!check_dead_flag)
+	if (!check_dead_flag(philo->data))
 	{
 		pthread_mutex_lock(&philo->meal_lock);
 		philo->meals_eaten++;

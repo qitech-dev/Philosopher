@@ -7,7 +7,8 @@ SOURCES =	main.c \
 			check_functions.c \
 			init_functions.c \
 			tools.c \
-			threads.c
+			threads.c \
+			actions.c
 
 OBJECTS = $(SOURCES:.c=.o)
 

@@ -25,7 +25,17 @@ void	*philo_routine(void *arg)
 	philo = (t_philo *)arg;
 	wait_start(philo->data);
 	if (!check_dead_flag(philo->data))
-		print_status(philo, "is thinking");
+		return (NULL);
+	if (!take_forks(philo))
+		return (NULL);
+	eat(philo);
+	release_forks(philo);
+	if (check_dead_flag(philo->data))
+		return (NULL);
+	philo_sleep(philo);
+	if (check_dead_flag(philo->data))
+		return (NULL);
+	think(philo);
 	return (NULL);
 }
 

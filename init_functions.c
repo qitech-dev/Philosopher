@@ -85,7 +85,7 @@ int	init_philo(t_data *data)
 			printf("Error: Mutex initialization failed.\n");
 			return (1);
 		}
-		data->dead_lock_ready++;
+		data->meal_locks_ready++;
 		i++;
 	}
 	return (0);
