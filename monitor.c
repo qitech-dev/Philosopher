@@ -63,7 +63,7 @@ void	monitor_simulation(t_data *data)
 		i = 0;
 		while(i < data->num_of_philos)
 		{
-			if (philo_has_died(data->philos))
+			if (philo_has_died(&data->philos[i]))
 				return ;
 			i++;
 		}

@@ -73,5 +73,6 @@ void		philo_sleep(t_philo *philo);
 void		think(t_philo *philo);
 void		print_death(t_philo *philo);
 void		monitor_simulation(t_data *data);
+void		precise_sleep_until(long long deadline, t_data *data);
 
 #endif

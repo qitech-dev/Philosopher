@@ -93,3 +93,13 @@ void	set_start_flag(t_data *data)//let all philos begin at same time
 	data->start_flag = 1;
 	pthread_mutex_unlock(&data->dead_lock);
 }
+
+void	precise_sleep_until(long long deadline, t_data *data)
+{
+	while (!check_dead_flag(data))
+	{
+		if (get_time_ms() >= deadline)
+			break ;
+		usleep(500);
+	}
+}
