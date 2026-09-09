@@ -58,8 +58,8 @@ void	eat(t_philo *philo)
 
 void	release_forks(t_philo *philo)
 {
-	pthread_mutex_lock(&philo->left_fork);
-	pthread_mutex_unlock(&philo->right_fork);
+	pthread_mutex_unlock(philo->left_fork);
+	pthread_mutex_unlock(philo->right_fork);
 }
 
 void	philo_sleep(t_philo *philo)
