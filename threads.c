@@ -18,14 +18,16 @@ static void	wait_start(t_data *data)
 		usleep(100);
 }
 
-void	*philo_routine(void *arg)
+static void	one_philo_routine(t_philo *philo)
 {
-	t_philo	*philo;
+	pthread_mutex_lock(philo->left_fork);
+	print_status(philo, "has taken a fork");
+	precise_sleep(philo->data->time_to_die, philo->data);
+	pthread_mutex_unlock(philo->left_fork);
+}
 
-	philo = (t_philo *)arg;
-	wait_start(philo->data);
-	if (check_dead_flag(philo->data))
-		return (NULL);
+static int	run_one_cycle(t_philo philo)
+{
 	if (!take_forks(philo))
 		return (NULL);
 	eat(philo);
@@ -36,6 +38,27 @@ void	*philo_routine(void *arg)
 	if (check_dead_flag(philo->data))
 		return (NULL);
 	think(philo);
+	return (NULL);
+}
+
+void	*philo_routine(void *arg)
+{
+	t_philo	*philo;
+
+	philo = (t_philo *)arg;
+	wait_start(philo->data);
+	if (check_dead_flag(philo->data))
+		return (NULL);
+	if (philo->data->num_of_philos == 1)
+	{
+		one_philo_routine(philo);
+		return (NULL);
+	}
+	while (!check_dead_flag(philo->data))
+	{
+		if (!run_one_cycle(philo))
+			break ;
+	}
 	return (NULL);
 }
 

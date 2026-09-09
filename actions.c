@@ -12,18 +12,8 @@
 
 #include "philo.h"
 
-int	take_forks(t_philo *philo)
+static void	select_forks(t_philo *philo, pthread_mutex_t **first, pthread_mutex_t ** second)
 {
-	pthread_mutex_t	*first;
-	pthread_mutex_t	*second;
-
-	if (philo->data->num_of_philos == 1)
-	{
-		pthread_mutex_lock(philo->left_fork);
-		print_status(philo, "has taken a fork");
-		pthread_mutex_unlock(philo->left_fork);
-		return (0);//not receive two forks
-	}
 	if (philo->id % 2 == 0)
 	{
 		first = philo->right_fork;
@@ -34,9 +24,28 @@ int	take_forks(t_philo *philo)
 		first = philo->left_fork;
 		second = philo->right_fork;
 	}
+}
+
+int	take_forks(t_philo *philo)
+{
+	pthread_mutex_t	*first;
+	pthread_mutex_t	*second;
+
+	select_forks(philo, first, second);
 	pthread_mutex_lock(first);
+	if (check_dead_flag(philo->data))
+	{
+		pthread_mutex_unlock(first);
+		return (0);
+	}
 	print_status(philo, "has taken a fork");
 	pthread_mutex_lock(second);
+	if (check_dead_flag(philo->data))
+	{
+		pthread_mutex_unlock(second);
+		pthread_mutex_unlock(first);
+		return (0);
+	}
 	print_status(philo, "has taken a fork");
 	return (1);
 }
