@@ -66,5 +66,10 @@ void		precise_sleep(long long duration, t_data *data);
 int			check_start_flag(t_data *data);
 void		set_start_flag(t_data *data);
 int			start_simulation(t_data *data);
+int			take_forks(t_philo *philo);
+void		eat(t_philo *philo);
+void		release_forks(t_philo *philo);
+void		philo_sleep(t_philo *philo);
+void		think(t_philo *philo);
 
 #endif
