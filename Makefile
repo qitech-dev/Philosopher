@@ -9,7 +9,8 @@ SOURCES =	main.c \
 			tools.c \
 			threads.c \
 			actions.c \
-			monitor.c
+			monitor.c \
+			forks.c \
 
 OBJECTS = $(SOURCES:.c=.o)
 

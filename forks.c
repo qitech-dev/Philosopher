@@ -49,3 +49,9 @@ int	take_forks(t_philo *philo)
 	print_status(philo, "has taken a fork");
 	return (1);
 }
+
+void	release_forks(t_philo *philo)
+{
+	pthread_mutex_unlock(philo->left_fork);
+	pthread_mutex_unlock(philo->right_fork);
+}
