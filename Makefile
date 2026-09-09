@@ -13,7 +13,8 @@ SOURCES =	main.c \
 			forks.c \
 			state.c \
 			print_functions.c \
-			simulation.c
+			simulation.c \
+			cleanup.c \
 
 OBJECTS = $(SOURCES:.c=.o)
 

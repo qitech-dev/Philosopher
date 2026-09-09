@@ -51,7 +51,7 @@ long int	ft_atol(const char *str)
 	return (result);
 }
 
-int	parse_args(int argc, char **argv, t_data *data)
+static int	check_arg_format(int argc, char **argv)
 {
 	int	i;
 
@@ -70,6 +70,11 @@ int	parse_args(int argc, char **argv, t_data *data)
 		}
 		i++;
 	}
+	return (0);
+}
+
+static int	store_required_args(char **argv, t_data *data)
+{
 	data->num_of_philos = ft_atol(argv[1]);
 	data->time_to_die = ft_atol(argv[2]);
 	data->time_to_eat = ft_atol(argv[3]);
@@ -82,6 +87,16 @@ int	parse_args(int argc, char **argv, t_data *data)
 		printf("Error: Invalid argument values.\n");
 		return (1);
 	}
+	return (0);
+}
+
+int	parse_args(int argc, char **argv, t_data *data)
+{
+	if (check_arg_format(argc, argv))
+		return (1);
+	if (store_required_args(argv, data))
+		return (1);
+	data->must_eat_times = -1;
 	if (argc == 6)
 	{
 		data->must_eat_times = ft_atol(argv[5]);
@@ -91,7 +106,5 @@ int	parse_args(int argc, char **argv, t_data *data)
 			return (1);
 		}
 	}
-	else
-		data->must_eat_times = -1;
 	return (0);
 }
