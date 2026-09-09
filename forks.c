@@ -12,7 +12,8 @@
 
 #include "philo.h"
 
-static void	select_forks(t_philo *philo, pthread_mutex_t **first, pthread_mutex_t ** second)
+static void	select_forks(t_philo *philo,
+	pthread_mutex_t **first, pthread_mutex_t **second)
 {
 	if (philo->id % 2 == 0)
 	{

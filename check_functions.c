@@ -74,10 +74,12 @@ int	parse_args(int argc, char **argv, t_data *data)
 	data->time_to_die = ft_atol(argv[2]);
 	data->time_to_eat = ft_atol(argv[3]);
 	data->time_to_sleep = ft_atol(argv[4]);
-	if (data->num_of_philos <= 0 || data->time_to_die <= 0 ||
-		data->time_to_eat <= 0 || data->time_to_sleep <= 0)
+	if (data->num_of_philos <= 0
+		|| data->time_to_die <= 0
+		|| data->time_to_eat <= 0
+		|| data->time_to_sleep <= 0)
 	{
-		printf ("Error: Invalid argument values.\n");
+		printf("Error: Invalid argument values.\n");
 		return (1);
 	}
 	if (argc == 6)

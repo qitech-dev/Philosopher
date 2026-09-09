@@ -61,7 +61,7 @@ void	monitor_simulation(t_data *data)
 	while (!check_dead_flag(data))
 	{
 		i = 0;
-		while(i < data->num_of_philos)
+		while (i < data->num_of_philos)
 		{
 			if (philo_has_died(&data->philos[i]))
 				return ;

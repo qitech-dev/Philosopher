@@ -11,6 +11,8 @@ SOURCES =	main.c \
 			actions.c \
 			monitor.c \
 			forks.c \
+			state.c \
+			print_functions.c
 
 OBJECTS = $(SOURCES:.c=.o)
 

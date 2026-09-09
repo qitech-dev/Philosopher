@@ -56,5 +56,6 @@ void	think(t_philo *philo)
 {
 	print_status(philo, "is thinking");
 	if (philo->data->num_of_philos % 2 == 1)
-		precise_sleep(philo->data->time_to_eat / 2, philo->data);//prevent failing to get the second fork.
+		precise_sleep(philo->data->time_to_eat / 2,
+			philo->data);
 }

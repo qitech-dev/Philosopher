@@ -80,7 +80,8 @@ int	init_philo(t_data *data)
 		data->philos[i].data = data;
 		data->philos[i].left_fork = &data->forks[i];
 		data->philos[i].right_fork = &data->forks[(i + 1) % data->num_of_philos];
-		if (pthread_mutex_init(&data->philos[i].meal_lock, NULL) != 0)
+		if (pthread_mutex_init(
+				&data->philos[i].meal_lock, NULL) != 0)
 		{
 			printf("Error: Mutex initialization failed.\n");
 			return (1);

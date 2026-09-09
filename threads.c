@@ -85,11 +85,12 @@ int	start_simulation(t_data *data)
 	i = 0;
 	while (i < data->num_of_philos)
 	{
-		if (pthread_create(&data->philos[i].thread, NULL, philo_routine, &data->philos[i]) != 0)
+		if (pthread_create(&data->philos[i].thread, NULL,
+				philo_routine, &data->philos[i]) != 0)
 		{
 			printf("Error: Thread creation failed.\n");
 			set_dead_flag(data);
-			set_start_flag(data);//release the preceding process.
+			set_start_flag(data);
 			join_threads(data, i);
 			return (1);
 		}
@@ -97,7 +98,7 @@ int	start_simulation(t_data *data)
 	}
 	data->start_time = get_time_ms();
 	i = 0;
-	while (i <data->num_of_philos)
+	while (i < data->num_of_philos)
 	{
 		data->philos[i].last_meal_time = data->start_time;
 		i++;
