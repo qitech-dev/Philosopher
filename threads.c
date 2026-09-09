@@ -40,3 +40,32 @@ static void	join_threads(t_data *data, int thread_count)
 		i++;
 	}
 }
+
+int	start_simulation(t_data *data)
+{
+	int	i;
+
+	i = 0;
+	while (i < data->num_of_philos)
+	{
+		if (pthread_create(&data->philos[i].thread, NULL, philo_routine, &data->philos[i]) 1= 0)
+		{
+			printf("Error: Thread creation failed.\n");
+			set_dead_flag(data);
+			set_start_flag(data);
+			join_threads(data, i);
+			return (1);
+		}
+		i++;
+	}
+	data->start_time = get_time_ms();
+	i = 0;
+	while (i <data->num_of_philos)
+	{
+		data->philos[i].last_meal_time = data->start_time;
+		i++;
+	}
+	set_start_flag(data);
+	join_threads(data, data->num_of_philos);
+	return (0);
+}
