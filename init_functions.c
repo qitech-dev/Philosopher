@@ -28,6 +28,7 @@ int	init_data(t_data *data)
 
 	init_resource_state(data);
 	data->start_time = 0;
+	data->start_flag = 0;
 	data->dead_flag = 0;
 	data->forks = malloc(sizeof(pthread_mutex_t) * data->num_of_philos);
 	if (!data->forks)

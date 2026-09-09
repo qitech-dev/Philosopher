@@ -42,6 +42,7 @@ struct s_data
 	int				time_to_sleep;
 	int				must_eat_times;
 	long long		start_time;
+	int				start_flag;
 	int				dead_flag;
 	pthread_mutex_t	dead_lock;
 	pthread_mutex_t	write_lock;
@@ -62,5 +63,7 @@ void		set_dead_flag(t_data *data);
 long long	get_time_ms(void);
 void		print_status(t_philo *philo, char *status);
 void		precise_sleep(long long duration, t_data *data);
+int			check_start_flag(t_data *data);
+void		set_start_flag(t_data *data);
 
 #endif

@@ -37,12 +37,6 @@ void	set_dead_flag(t_data *data)//stop process
 	pthread_mutex_unlock(&data->dead_lock);
 }
 
-void    *philo_routine(void *arg)
-{
-   (void)arg;
-	return (NULL);
-}
-
 void	print_status(t_philo *philo, char *status)
 {
 	long long	timestamp;
@@ -67,4 +61,21 @@ void	precise_sleep(long long duration, t_data *data)
 			break ;
 		usleep(500);
 	}
+}
+
+int	check_star_flag(t_data *data)
+{
+	int	flag;
+
+	pthread_mutex_unlock(&data->dead_lock);
+	flag = data->start_flag;
+	pthread_mutex_unlock(&data->dead_lock);
+	return (flag);
+}
+
+void	set_start_flag(t_data *data)//let all philos begin at same time
+{
+	pthread_mutex_lock(&data->dead_lock);
+	data->start_flag = 1;
+	pthread_mutex_unlock(&data->dead_lock);
 }
