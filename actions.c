@@ -50,19 +50,35 @@ int	take_forks(t_philo *philo)
 	return (1);
 }
 
-void	eat(t_philo *philo)
+static int	start_meal(t_philo *philo)
 {
+	long long	now;
+
 	pthread_mutex_lock(&philo->meal_lock);
-	philo->last_meal_time = get_time_ms();
+	now = get_time_ms();
+	if ((now - philo->last_meal_time) >= philo->data->time_to_die)
+	{
+		pthread_mutex_unlock(&philo->meal_lock);
+		print_death(philo);
+		return (0);
+	}
+	philo->last_meal_time = now;
 	pthread_mutex_unlock(&philo->meal_lock);
+	return (1);
+}
+
+int	eat(t_philo *philo)
+{
+	if (!start_meal(philo))
+		return (0);
 	print_status(philo, "is eating");
 	precise_sleep(philo->data->time_to_eat, philo->data);
-	if (!check_dead_flag(philo->data))
-	{
-		pthread_mutex_lock(&philo->meal_lock);
-		philo->meals_eaten++;
-		pthread_mutex_unlock(&philo->meal_lock);
-	}
+	if (check_dead_flag(philo->data))
+		return (0);
+	pthread_mutex_lock(&philo->meal_lock);
+	philo->meals_eaten++;
+	pthread_mutex_unlock(&philo->meal_lock);
+	return (1);
 }
 
 void	release_forks(t_philo *philo)

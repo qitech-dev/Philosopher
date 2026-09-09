@@ -30,7 +30,11 @@ static int	run_one_cycle(t_philo *philo)
 {
 	if (!take_forks(philo))
 		return (0);
-	eat(philo);
+	if (!eat(philo))
+	{
+		release_forks(philo);
+		return (0);
+	}
 	release_forks(philo);
 	if (check_dead_flag(philo->data))
 		return (0);
