@@ -33,5 +33,5 @@ int	main(int argc, char **argv)
 	if (status == 2)
 		return (1);
 	cleanup_data(&data);
-	return (0);
+	return (status);
 }
