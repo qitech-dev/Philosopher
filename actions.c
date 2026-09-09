@@ -1,0 +1,42 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   actions.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: qijin <qijin@learner.42.tech>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/09/09 16:36:48 by qijin             #+#    #+#             */
+/*   Updated: 2026/09/09 16:36:49 by qijin            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "philo.h"
+
+int	take_forks(t_philo *philo)
+{
+	pthread_mutex_t	*first;
+	pthread_mutex_t	*second;
+
+	if (philo->data->num_of_philos == 1)
+	{
+		pthread_mutex_lock(&philo->left_fork);
+		print_status(philo, "has taken a fork");
+		pthread_mutex_unlock(philo->left_fork);
+		return (0);
+	}
+	if (philo->id % 2 == 0)
+	{
+		first = philo->right_fork;
+		second = philo->left_fork;
+	}
+	else
+	{
+		first = philo->left_fork;
+		second = philo->right_fork;
+	}
+	pthread_mutex_lock(first);
+	print_status(philo, "has taken a fork");
+	pthread_mutex_lock(second);
+	print_status(philo, "has taken a fork");
+	return (1);
+}

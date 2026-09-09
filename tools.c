@@ -67,7 +67,7 @@ int	check_start_flag(t_data *data)
 {
 	int	flag;
 
-	pthread_mutex_unlock(&data->dead_lock);
+	pthread_mutex_lock(&data->dead_lock);
 	flag = data->start_flag;
 	pthread_mutex_unlock(&data->dead_lock);
 	return (flag);
