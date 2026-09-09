@@ -12,7 +12,8 @@ SOURCES =	main.c \
 			monitor.c \
 			forks.c \
 			state.c \
-			print_functions.c
+			print_functions.c \
+			simulation.c
 
 OBJECTS = $(SOURCES:.c=.o)
 
