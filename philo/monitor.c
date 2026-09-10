@@ -25,7 +25,7 @@ static int	philo_has_died(t_philo *philo, long long cutoff)
 	return (0);
 }
 
-static long	long	get_quota_time(t_philo *philo)
+static long long	get_quota_time(t_philo *philo)
 {
 	long long	finished;
 
@@ -35,7 +35,7 @@ static long	long	get_quota_time(t_philo *philo)
 	return (finished);
 }
 
-static int	all_ate_enough(t_data *data)
+static long long	all_ate_enough(t_data *data)
 {
 	int			i;
 	long long	finished;
@@ -47,7 +47,7 @@ static int	all_ate_enough(t_data *data)
 	latest = 0;
 	while (i < data->num_of_philos)
 	{
-		finished = get_quota_time(data->philos);
+		finished = get_quota_time(&data->philos[i]);
 		if (!finished)
 			return (0);
 		if (finished > latest)
@@ -67,7 +67,7 @@ void	monitor_simulation(t_data *data)
 	{
 		cutoff = get_time_ms();
 		finished = all_ate_enough(data);
-		if (!finished)
+		if (finished)
 			cutoff = finished;
 		i = 0;
 		while (i < data->num_of_philos)
