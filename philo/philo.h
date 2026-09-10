@@ -28,6 +28,7 @@ struct s_philo
 	int				id;
 	int				meals_eaten;
 	long long		last_meal_time;
+	long long		quota_time;
 	pthread_t		thread;
 	pthread_mutex_t	*left_fork;
 	pthread_mutex_t	*right_fork;
@@ -49,10 +50,10 @@ struct s_data
 	pthread_mutex_t	write_lock;
 	pthread_mutex_t	*forks;
 	t_philo			*philos;
-	int				write_lock_ready;//whether was successfully initialized
-	int				dead_lock_ready;//whether was successfully initialized
-	int				forks_ready;//how many
-	int				meal_locks_ready;//how many
+	int				write_lock_ready;
+	int				dead_lock_ready;
+	int				forks_ready;
+	int				meal_locks_ready;
 };
 
 int			parse_args(int argc, char **argv, t_data *data);

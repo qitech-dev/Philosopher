@@ -12,13 +12,10 @@
 
 #include "philo.h"
 
-static int	philo_has_died(t_philo *philo)
+static int	philo_has_died(t_philo *philo, long long cutoff)
 {
-	long long	now;
-
 	pthread_mutex_lock(&philo->meal_lock);
-	now = get_time_ms();
-	if ((now - philo->last_meal_time) >= philo->data->time_to_die)
+	if ((cutoff - philo->last_meal_time) >= philo->data->time_to_die)
 	{
 		print_death(philo);
 		pthread_mutex_unlock(&philo->meal_lock);
@@ -28,46 +25,58 @@ static int	philo_has_died(t_philo *philo)
 	return (0);
 }
 
-static int	has_eaten_enough(t_philo *philo, int target)
+static long	long	get_quota_time(t_philo *philo)
 {
-	int	enough;
+	long long	finished;
 
 	pthread_mutex_lock(&philo->meal_lock);
-	enough = (philo->meals_eaten >= target);
+	finished = philo->quota_time;
 	pthread_mutex_unlock(&philo->meal_lock);
-	return (enough);
+	return (finished);
 }
 
 static int	all_ate_enough(t_data *data)
 {
-	int	i;
+	int			i;
+	long long	finished;
+	long long	latest;
 
 	if (data->must_eat_times == -1)
 		return (0);
 	i = 0;
+	latest = 0;
 	while (i < data->num_of_philos)
 	{
-		if (!has_eaten_enough(&data->philos[i], data->must_eat_times))
+		finished = get_quota_time(data->philos);
+		if (!finished)
 			return (0);
+		if (finished > latest)
+			latest = finished;
 		i++;
 	}
-	return (1);
+	return (latest);
 }
 
 void	monitor_simulation(t_data *data)
 {
 	int			i;
+	long long	cutoff;
+	long long	finished;
 
 	while (!check_dead_flag(data))
 	{
+		cutoff = get_time_ms();
+		finished = all_ate_enough(data);
+		if (!finished)
+			cutoff = finished;
 		i = 0;
 		while (i < data->num_of_philos)
 		{
-			if (philo_has_died(&data->philos[i]))
+			if (philo_has_died(&data->philos[i], cutoff))
 				return ;
 			i++;
 		}
-		if (all_ate_enough(data))
+		if (finished)
 		{
 			set_dead_flag(data);
 			return ;
